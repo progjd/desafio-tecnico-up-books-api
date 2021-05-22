@@ -1,6 +1,7 @@
-# Simple React Pagination
+# Google Books Api
 
-> Frontend pagination example using React with Hooks
+> Frontend Consumindo Books Api 
+
 
 ## Available Scripts
 
