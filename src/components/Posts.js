@@ -11,7 +11,7 @@ const Posts = ({ result, loading }) => {
   return (
     <div>
 
-<table>
+          <table>
             <thead>
               <tr>
                 <th>Imagem</th>
@@ -25,8 +25,8 @@ const Posts = ({ result, loading }) => {
               {result.map(book => (
                 <tr key={book.id} >
                   <td className="title">{book.volumeInfo.imageLinks.thumbnail ? (
-                  <a target="_blank" href={book.volumeInfo.previewLink}>
-                  <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
+                    <a target="_blank" href={book.volumeInfo.previewLink}>
+                    <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
                   </a>  
                   ) : (
                     <img
@@ -40,6 +40,7 @@ const Posts = ({ result, loading }) => {
        
                 </tr>
               ))}
+              
             </tbody>
           </table>
      
