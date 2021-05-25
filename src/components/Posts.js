@@ -22,6 +22,7 @@ const Posts = ({ result, loading }) => {
             </thead>
 
             <tbody>
+              
               {result.map(book => (
                 <tr key={book.id} >
                   <td className="title">{book.volumeInfo.imageLinks.thumbnail ? (

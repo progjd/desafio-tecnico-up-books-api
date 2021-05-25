@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import Posts from './components/Posts';
 import Pagination from './components/Pagination';
 import axios from 'axios';
@@ -13,14 +13,15 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(8);
   const [book, setBooks] = useState('');
+  // const [result, setResult] = useState([]);
    const [result, setResult] = useState([], () => {
-    const books = localStorage.getItem('@Repositories:result');
-    if (books) {
-      return JSON.parse(books);
+    const starBooks = localStorage.getItem('@Repositories:result');
+    if (starBooks) {
+      return JSON.parse(starBooks);
+    }else{
+      return [];
     }
-    return [];
   });
-
  
 // Change page
    const indexOfLastPost = currentPage * postsPerPage;
@@ -28,11 +29,14 @@ const App = () => {
   const currentPosts = result.slice(indexOfFirstPost, indexOfLastPost);
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
-  
+  const consultar = () => {
+alert(localStorage.getItem('@Repositories:result'))
+  }
 // Get current posts
 function handleChange(event){
   const book = event.target.value;
      setBooks(book);
+     
   }
 
   //Conexão com a api
@@ -45,20 +49,23 @@ function handleChange(event){
    });
   };
  
-  function handleToFavorite (id) {
+  function handleToFavorite (title) {
     if (localStorage.getItem('@Repositories:result')) {
-      let books = JSON.parse(localStorage.getItem('@Repositories:result'));
-      if (Object.keys(books).includes(id)) {
-        delete books[id];
+      let starBooks = JSON.parse(localStorage.getItem('@Repositories:result'));
+      if (Object.keys(starBooks).includes(title)) {
+        delete starBooks[title];
       } else {  
-        books[id] = true;
+        starBooks[title] = true;
       }
-      localStorage.setItem('@Repositories:result', JSON.stringify(books));
+      localStorage.setItem('@Repositories:result', JSON.stringify(starBooks));
+     
     } else {
-      localStorage.setItem('@Repositories:result', JSON.stringify({ [id]: true }));
+      localStorage.setItem('@Repositories:result', JSON.stringify({ [title]: true }));
+   
     }
   };
-  
+
+ 
   return (
     <div className='container mt-5'>
       <h1 className='text-primary mb-3'>Book Search App</h1>
@@ -88,11 +95,13 @@ function handleChange(event){
           <>
             <span key={i}>{book.volumeInfo.title}</span>
 
-            <button onClick={() => handleToFavorite(book.id)}>Favoritar</button>
+            <button onClick={() => handleToFavorite(book.volumeInfo.title)}>Favoritar</button>
             <br />
           </>
         );
       })}
+      <br/><br/>
+      <button onClick={() => consultar('@Repositories:result')}>Consultar Favoritos</button>
     </div>
   );
 };
